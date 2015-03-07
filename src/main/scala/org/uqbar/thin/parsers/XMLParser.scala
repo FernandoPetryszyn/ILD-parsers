@@ -16,10 +16,12 @@ trait XMLParser extends RegexParsers {
   
   
   def xml:Parser[Element] = node | leaf
-  def node = ("<" ~> (identifier) ~ attribute.* <~ ">") ~ xml.+ ~ ("</" ~> identifier <~ ">") ^^ { case id ~ attribs ~ children ~ id2 if matchTags(id,id2) => Node(id,attribs,children)}
+  def node = openingTag ~ xml.+ ~ closingTag ^^ { case id ~ attribs ~ children ~ id2 if matchTags(id,id2) => Node(id,attribs,children)}
+  def leaf = openingTag ~ body.? ~ closingTag ^^ { case id ~ attribs ~ body ~ id2 if matchTags(id,id2)=> Leaf(id,attribs,body.getOrElse(Nil).mkString(" "))  }
+  def openingTag = ("<" ~> (identifier) ~ attribute.* <~ ">")
+  def closingTag = ("</" ~> identifier <~ ">") 
   def attribute = identifier ~ "=" ~ string ^^ {case id ~ _ ~ value => Attribute(id,value)}
   def identifier = """[A-Za-z]+""".r ^^ {r => r.toString()}
-  def leaf = ("<" ~> (identifier) ~ attribute.* <~ ">") ~ body.? ~ ("</" ~> identifier <~ ">") ^^ { case id ~ attribs ~ body ~ id2 if matchTags(id,id2)=> Leaf(id,attribs,body.getOrElse(Nil).mkString(" "))  }
   def string = """\w+""".r ^^ { r => r.toString()}
   def body = string.+
   
