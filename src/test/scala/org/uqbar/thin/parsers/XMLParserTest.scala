@@ -34,7 +34,7 @@ class XMLParserTest extends ParserTest with XMLParser {
            </start>""" should beParsedTo(Node("start",List(Attribute("test","on")),List(Leaf("tag",Nil,"chau"),Leaf("ble",Nil,"hola"),Leaf("tagConAtributo",List(Attribute("atributo","si")),"smile"),Node("nodoExtra",Nil,List(Leaf("ble",Nil,"vacio"))))))(node)
       }
       
- /*     "complex xmlFile" in {
+      "complex xmlFile" in {
         """<start test=on>
                 <tag> chau </tag>
                 <ble> hola </ble>
@@ -44,9 +44,9 @@ class XMLParserTest extends ParserTest with XMLParser {
                 </nodoExtra>
            </start>
           <unaHojaColgada></unaHojaColgada>
-          """ should beParsedTo(List(Node("start",List(Attribute("test","on")),List(Leaf("tag",Nil,"chau"),Leaf("ble",Nil,"hola"),Leaf("tagConAtributo",List(Attribute("atributo","si")),"smile"),Node("nodoExtra",Nil,List(Leaf("ble",Nil,"vacio"))))),Leaf("unaHojaColgada",Nil,"")))(xml.*)
+          """ should beParsedTo(List(Node("start",List(Attribute("test","on")),List(Leaf("tag",Nil,"chau"),Leaf("ble",Nil,"hola"),Leaf("tagConAtributo",List(Attribute("atributo","si")),"smile"),Node("nodoExtra",Nil,List(Leaf("ble",Nil,"vacio"))))),Leaf("unaHojaColgada",Nil,"")))(???)
          
-      } */
+      } 
 
     }
     
@@ -56,11 +56,11 @@ class XMLParserTest extends ParserTest with XMLParser {
       }
       
       
-  /* Si pones mas lindo el XMLParser este no va a tirar error :P  
-   *  "typo" in {
-        "<tag></notag>" should notBeParsed(xml)
+//  Si pones mas lindo el XMLParser este no va a tirar error :P  (osea, falta un case en el pattern matching)
+     "typo" in {
+        "<tag> </notag>" should notBeParsed(xml)
         }
-        */
+        
     }
   }
 }
