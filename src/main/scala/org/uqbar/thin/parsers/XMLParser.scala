@@ -11,11 +11,11 @@ trait XMLParser extends RegexParsers {
   case class Attribute(id: String, value: String) //TODO to be extended
 
   def tagsWithBody[U](body: Parser[U]) = "<" ~> (identifier) >> { id => ((attribute.*) <~ ">") ~ body ~ ("</" ~> id <~ ">") }
+  
   lazy val xml: Parser[Element] = leaf | node
   lazy val leaf = leafWithBody // | leafNoBody  
   lazy val node = tagsWithBody(xml.+) ^^ { case attribs ~ children ~ id => Node(id, attribs, children) }
   lazy val leafWithBody = tagsWithBody(body.?) ^^ { case attribs ~ body ~ id => Leaf(id, attribs, body.getOrElse(Nil).mkString(" ")) }
-
   lazy val attribute = identifier ~ "=" ~ string ^^ { case id ~ _ ~ value => Attribute(id, value) }
   lazy val identifier = """[A-Za-z]+""".r ^^ { r => r.toString() }
   lazy val string = """\w+""".r ^^ { r => r.toString() }

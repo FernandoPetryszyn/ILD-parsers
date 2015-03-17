@@ -35,7 +35,7 @@ class XMLParserTest extends ParserTest with XMLParser {
       }
       
       "complex xmlFile" in {
-        """<start test=on>
+        XMLParser("""<start test=on>
                 <tag> chau </tag>
                 <ble> hola </ble>
                 <tagConAtributo atributo=si> smile </tagConAtributo>
@@ -44,7 +44,7 @@ class XMLParserTest extends ParserTest with XMLParser {
                 </nodoExtra>
            </start>
           <unaHojaColgada></unaHojaColgada>
-          """ should beParsedTo(List(Node("start",List(Attribute("test","on")),List(Leaf("tag",Nil,"chau"),Leaf("ble",Nil,"hola"),Leaf("tagConAtributo",List(Attribute("atributo","si")),"smile"),Node("nodoExtra",Nil,List(Leaf("ble",Nil,"vacio"))))),Leaf("unaHojaColgada",Nil,"")))(???)
+          """) should be (List(Node("start",List(Attribute("test","on")),List(Leaf("tag",List(),"chau"), Leaf("ble",List(),"hola"), Leaf("tagConAtributo",List(Attribute("atributo","si")),"smile"), Node("nodoExtra",List(),List(Leaf("ble",List(),"vacio"))))), Leaf("unaHojaColgada",List(),"")))
          
       } 
 
