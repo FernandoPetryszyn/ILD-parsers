@@ -1,5 +1,5 @@
 package org.uqbar.thin.parsers
-
+//test
 import scala.util.parsing.combinator._
 
 object XMLParser extends XMLParser
